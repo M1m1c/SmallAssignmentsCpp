@@ -8,11 +8,15 @@ int main()
 
     std::cin >> input;
 
-    std::string reverse;
-
-    for (int i = input.length() - 1; i >= 0; i--)
+    auto length = input.length();
+    auto frontIndex = 0;
+    for (int i = length - 1; i >= frontIndex; i--)
     {
-        reverse += input[i];
+        auto tempChar = input[i];
+        input[i] = input[frontIndex];
+        input[frontIndex] = tempChar;
+        frontIndex++;
     }
-    std::cout << reverse << "\n";
+
+    std::cout << input << "\n";
 }
