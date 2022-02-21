@@ -1,9 +1,6 @@
 #include <iostream>
 #include "LINEAR_SEARCH_WORD.h"
 
-
-//TODO debug and refactor before submitting
-//Make sure that we did not use any built in funcitons
 int main()
 {
 	std::cout << "please write a sentence \n";
@@ -14,7 +11,7 @@ int main()
 	char searchWord[maxWordLength] = {};
 	std::cin.getline(searchWord, maxWordLength);
 
-	int currentSentenceLength = GetCurrentWordLength(maxSentenceLength, sentence);
+	int currentSentenceLength = GetCurrentSentenceLength(maxSentenceLength, sentence);
 
 	std::string wordsInSentence[maxWordsInSentence];
 	CollectWordsFromSentence(currentSentenceLength, wordsInSentence, sentence);
@@ -22,19 +19,19 @@ int main()
 	for (auto i = 0; i < maxWordsInSentence; i++)
 	{
 		auto tempWord = wordsInSentence[i];
-		if (tempWord == "") 
+	
+		if (tempWord == "") //we reached an empty index in the word array
 		{
-			std::cout << searchWord << " was not found in the sentence \n";
+			std::cout <<"The word " << searchWord << " was not found in the sentence \n";
 			break; 
 		}
 		else if (CompareWithSearchWord(searchWord, tempWord))
 		{
-			std::cout << searchWord << " was found in the sentence \n";
+			std::cout <<"The word " << searchWord << " was found in the sentence \n";
 			break;
 		}
 	}
 }
-
 
 void CollectWordsFromSentence(int currentSentenceLength, std::string(&wordsInSentence)[20], char(&sentence)[100])
 {
@@ -55,7 +52,7 @@ bool CompareWithSearchWord(char(&searchWord)[20], std::string& tempWord)
 
 		auto compare = tempWord[i];
 		auto search = searchWord[i];
-		if (search == NULL || compare == NULL) { break; }
+		if (search == NULL && compare == NULL) { break; }
 
 		if (search == compare)
 		{
@@ -70,7 +67,7 @@ bool CompareWithSearchWord(char(&searchWord)[20], std::string& tempWord)
 	return retval;
 }
 
-int GetCurrentWordLength(int sentenceLength, char(&sentence)[100])
+int GetCurrentSentenceLength(int sentenceLength, char(&sentence)[100])
 {
 	int currentLength = 0;
 	for (int i = 0; i < sentenceLength; i++)
@@ -87,8 +84,8 @@ std::string GetWordInSentence(int& i, int length, char(&sentence)[100])
 	int steps = -1;
 	for (int g = i; g <= length; g++)
 	{
-		char var = sentence[g];
-		if (g == length || var == ' ' || var == ',' || var == '.')
+		char letter = sentence[g];
+		if (g == length || letter == ' ' || letter == ',' || letter == '.')
 		{
 			i = g;
 			break;
@@ -96,7 +93,7 @@ std::string GetWordInSentence(int& i, int length, char(&sentence)[100])
 		else
 		{
 			steps++;
-			retval += var;
+			retval += letter;
 		}
 	}
 
